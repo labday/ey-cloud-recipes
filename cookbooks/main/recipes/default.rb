@@ -5,7 +5,7 @@ execute "testing" do
 end
 
 execute "Seeding database" do
-  command 'rake db:seed'
+  command 'rake db:seed --trace'
 end
 
 #require_recipe "solr"
