@@ -4,7 +4,11 @@ execute "testing" do
   }
 end
 
-require_recipe "solr"
+execute "Seeding database" do
+  command 'rake db:seed'
+end
+
+#require_recipe "solr"
 
 # uncomment if you want to run couchdb recipe
 # require_recipe "couchdb"
