@@ -5,6 +5,7 @@ execute "testing" do
 end
 
 execute "Seeding database" do
+  cwd "/data/#{app}/current"
   command 'rake db:seed --trace'
 end
 
