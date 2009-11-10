@@ -9,6 +9,8 @@ execute "Seeding database" do
   command 'rake db:seed --trace'
 end
 
+require_recipe "nginx_configurations"
+
 #require_recipe "solr"
 
 # uncomment if you want to run couchdb recipe
