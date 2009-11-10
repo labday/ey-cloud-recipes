@@ -1,3 +1,4 @@
+# Redirect non-www requests to www.x
 server {
   <%= "server_name #{@server_name.gsub('www.', '')};" %>
   <%= "rewrite ^(.*) http://#{@server_name}$1 permanent;" %>

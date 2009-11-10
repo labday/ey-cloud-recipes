@@ -29,4 +29,17 @@ node[:applications].each do |app, data|
     )
     action :create
   end
+
+  template "/data/nginx/servers/#{app}/custom.locations.conf" do
+    owner node[:users].first[:username]
+    group node[:users].first[:gid]
+    mode 0644
+    source "custom.locations.conf.erb"
+    variables(
+      :server_name => data[:vhosts].first[:name],
+      :http_bind_port => data[:http_bind_port],
+      :app_name => app
+    )
+    action :create
+  end
 end
