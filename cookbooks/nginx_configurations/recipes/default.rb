@@ -4,7 +4,7 @@
 #
 node[:applications].each do |app, data|
   if data[:vhosts].first[:name].match(/^www\./)
-    template "/data/nginx/servers/#{app}_redirect_root_domain.conf" do
+    template "/data/nginx/servers/000_#{app}_redirect_root_domain.conf" do
       owner node[:users].first[:username]
       group node[:users].first[:gid]
       mode 0644
@@ -17,7 +17,7 @@ node[:applications].each do |app, data|
     end
   end
 
-  template "/data/nginx/servers/0#{app}_ensure_ssl.conf" do
+  template "/data/nginx/servers/001_#{app}_ensure_ssl.conf" do
     owner node[:users].first[:username]
     group node[:users].first[:gid]
     mode 0644
