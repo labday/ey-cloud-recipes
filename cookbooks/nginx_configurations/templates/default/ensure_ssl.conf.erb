@@ -1,0 +1,13 @@
+server {
+  listen <%= @http_bind_port %>;
+
+  server_name <%= @server_name %>;
+
+  root /data/<%= @app_name %>/current/public;
+
+  access_log /var/log/engineyard/nginx/<%= @app_name %>.access.log main;
+
+  error_log /var/log/engineyard/nginx/<%= @app_name %>.error.log notice;
+
+  rewrite ^(.*) https://<%= @server_name %>$1;
+}

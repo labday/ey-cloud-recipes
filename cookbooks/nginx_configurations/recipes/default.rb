@@ -16,4 +16,17 @@ node[:applications].each do |app, data|
       action :create
     end
   end
+
+  template "/data/nginx/servers/0#{app}_ensure_ssl.conf" do
+    owner node[:users].first[:username]
+    group node[:users].first[:gid]
+    mode 0644
+    source "ensure_ssl.conf.erb"
+    variables(
+      :server_name => data[:vhosts].first[:name],
+      :http_bind_port => data[:http_bind_port],
+      :app_name => app
+    )
+    action :create
+  end
 end
