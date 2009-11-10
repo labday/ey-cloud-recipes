@@ -40,14 +40,16 @@ node[:applications].each do |app, data|
     action :create
   end
 
-  template "/data/nginx/servers/#{app}/site.users" do
-    owner node[:users].first[:username]
-    group node[:users].first[:gid]
-    mode 0644
-    source "site.users.erb"
-    variables(
-      :app_name => app
-    )
-    action :create
+  unless File.exists?("/data/nginx/servers/#{app}/site.users")
+    template "/data/nginx/servers/#{app}/site.users" do
+      owner node[:users].first[:username]
+      group node[:users].first[:gid]
+      mode 0644
+      source "site.users.erb"
+      variables(
+        :app_name => app
+      )
+      action :create
+    end
   end
 end
