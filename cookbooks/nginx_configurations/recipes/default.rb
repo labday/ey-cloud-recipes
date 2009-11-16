@@ -15,41 +15,4 @@ node[:applications].each do |app, data|
       action :create
     end
   end
-
-  template "/data/nginx/servers/001_#{app}_ensure_ssl.conf" do
-    owner node[:users].first[:username]
-    group node[:users].first[:gid]
-    mode 0644
-    source "ensure_ssl.conf.erb"
-    variables(
-      :server_name => data[:vhosts].first[:name],
-      :http_bind_port => data[:http_bind_port],
-      :app_name => app
-    )
-    action :create
-  end
-
-  template "/data/nginx/servers/#{app}/custom.locations.conf" do
-    owner node[:users].first[:username]
-    group node[:users].first[:gid]
-    mode 0644
-    source "custom.locations.conf.erb"
-    variables(
-      :app_name => app
-    )
-    action :create
-  end
-
-  unless File.exists?("/data/nginx/servers/#{app}/site.users")
-    template "/data/nginx/servers/#{app}/site.users" do
-      owner node[:users].first[:username]
-      group node[:users].first[:gid]
-      mode 0644
-      source "site.users.erb"
-      variables(
-        :app_name => app
-      )
-      action :create
-    end
-  end
 end
