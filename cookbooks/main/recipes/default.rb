@@ -20,10 +20,14 @@ if node[:instance_role] == "solo" || (node[:name] && node[:name].upcase == 'SOLR
 end
 
 if node[:instance_role] == "solo" || node[:instance_role].match(/^app/)
-  puts "Configuring solr client"
+  command %Q{
+    echo "Configuring solr client" >> /root/chefsolrclient
+  }
   require_recipe 'solr_client'
 else
-  puts "Not configuring solr client"
+  command %Q{
+    echo "Not Configuring solr client" >> /root/chefsolrclient
+  }
 end
 
 # uncomment if you want to run couchdb recipe
