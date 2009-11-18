@@ -7,6 +7,7 @@ require 'digest/sha1'
 
 utility_slice = node[:utility_instances].detect {|n| n[:name].upcase == "SOLR"}
 if utility_slice
+  puts "Utility slice detected, configuring solr"
   node[:applications].each do |app,data|
     template "/data/#{app}/current/config/solr.yml" do
       source "solr.yml.erb"
@@ -24,6 +25,7 @@ if utility_slice
               "/usr/bin/monit restart all -g #{app}"
       action :run
     end
-
   end
+else
+  puts "No utility slice detected."
 end
