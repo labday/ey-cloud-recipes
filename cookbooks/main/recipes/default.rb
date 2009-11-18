@@ -15,8 +15,12 @@ if node[:instance_role] == "solo" || node[:instance_role].match(/^app/)
   require_recipe "nginx_configurations"
 end
 
-if node[:instance_role] == "solo" || node[:name] == 'SOLR'
+if node[:instance_role] == "solo" || (node[:name] && node[:name].upcase == 'SOLR')
   require_recipe 'solr'
+end
+
+if node[:instance_role] == "solo" || node[:instance_role].match(/^app/)
+  require_recipe 'solr_client'
 end
 
 # uncomment if you want to run couchdb recipe
