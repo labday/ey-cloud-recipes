@@ -37,7 +37,8 @@ node[:applications].each do |app,data|
     group node[:owner_name]
     mode 0644
     variables({
-      :app => app
+      :app => app,
+      :username => node[:owner_name]
     })
   end
 
