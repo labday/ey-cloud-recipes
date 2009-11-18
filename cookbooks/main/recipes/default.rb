@@ -4,14 +4,20 @@ execute "testing" do
   }
 end
 
-execute "Seeding database" do
-  cwd "/data/LabDay/current"
-  command 'rake db:seed --trace'
+if node[:instance_role] == "solo" || node[:instance_role] == "app_master"
+  execute "Seeding database" do
+    cwd "/data/LabDay/current"
+    command 'rake db:seed --trace'
+  end
 end
 
-require_recipe "nginx_configurations"
+if node[:instance_role] == "solo" || node[:instance_role].match(/^app/)
+  require_recipe "nginx_configurations"
+end
 
-#require_recipe "solr"
+if node[:instance_role] == "solo" || node[:name] == 'SOLR'
+  require_recipe 'solr'
+end
 
 # uncomment if you want to run couchdb recipe
 # require_recipe "couchdb"
