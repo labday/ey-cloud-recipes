@@ -1,0 +1,5 @@
+# Custom server level rewrites go here.
+# This file is overwritten by Labday Chef recipes
+if ($host ~* ^my) {
+  rewrite ^(.*)$ /my$1;
+}

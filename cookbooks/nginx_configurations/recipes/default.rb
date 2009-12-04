@@ -15,4 +15,15 @@ node[:applications].each do |app, data|
       action :create
     end
   end
+  
+  template "/data/nginx/servers/LabDay.rewrites" do
+    owner node[:users].first[:username]
+    group node[:users].first[:gid]
+    mode 0644
+    source "rewrites.erb"
+    variables(
+      :server_name => data[:vhosts].first[:name]
+    )
+    action :create
+  end
 end
