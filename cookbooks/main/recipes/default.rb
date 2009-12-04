@@ -11,7 +11,7 @@ if node[:instance_role] == "solo" || node[:instance_role] == "app_master"
   end
   
   execute "Generating Whenever Cron" do
-    cwd "/data/labDay/current"
+    cwd "/data/LabDay/current"
     command "whenever --write-crontab -u labday --set environment=#{node[:environment][:framework_env]}"
   end
 end
