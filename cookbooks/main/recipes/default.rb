@@ -9,6 +9,11 @@ if node[:instance_role] == "solo" || node[:instance_role] == "app_master"
     cwd "/data/LabDay/current"
     command 'rake db:seed --trace'
   end
+  
+  execute "Generating Whenever Cron" do
+    cwd "/data/labDay/current"
+    command "whenever --write-crontab -u labday --set environment=#{node[:environment][:framework_env]}"
+  end
 end
 
 if node[:instance_role] == "solo" || node[:instance_role].match(/^app/)
