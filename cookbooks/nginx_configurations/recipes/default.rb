@@ -26,4 +26,9 @@ node[:applications].each do |app, data|
     )
     action :create
   end
+  
+  execute "restart-nginx" do
+    command "/etc/init.d/nginx restart"
+    action :run
+  end
 end
