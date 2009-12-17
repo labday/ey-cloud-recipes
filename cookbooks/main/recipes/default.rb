@@ -4,16 +4,13 @@ execute "testing" do
   }
 end
 
-if node[:instance_role] == "solo" || node[:instance_role] == "app_master"
+if node[:instance_role] == "solo" || node[:instance_role] == "utility"
   execute "Seeding database" do
     cwd "/data/LabDay/current"
     command 'rake db:seed --trace'
   end
   
-  execute "Generating Whenever Cron" do
-    cwd "/data/LabDay/current"
-    command "whenever --write-crontab -u labday --set environment=#{node[:environment][:framework_env]}"
-  end
+  require_recipe "whenever"
 end
 
 if node[:instance_role] == "solo" || node[:instance_role].match(/^app/)
@@ -24,7 +21,7 @@ if node[:instance_role] == "solo" || (node[:name] && node[:name].upcase == 'SOLR
   require_recipe 'solr'
 end
 
-if node[:instance_role] == "solo" || node[:instance_role].match(/^app/)
+if node[:instance_role] == "solo" || (node[:instance_role].match(/^app/) || node[:instance_role] == "utility")
   require_recipe 'solr_client'
 end
 
