@@ -4,13 +4,13 @@ execute "testing" do
   }
 end
 
-if node[:instance_role] == "solo" || node[:instance_role] == "utility"
+if node[:instance_role] == "solo" || node[:instance_role] == "util"
+  require_recipe "whenever"
+
   execute "Seeding database" do
     cwd "/data/LabDay/current"
     command 'rake db:seed --trace'
-  end
-  
-  require_recipe "whenever"
+  end  
 end
 
 if node[:instance_role] == "solo" || node[:instance_role].match(/^app/)
@@ -21,7 +21,7 @@ if node[:instance_role] == "solo" || (node[:name] && node[:name].upcase == 'SOLR
   require_recipe 'solr'
 end
 
-if node[:instance_role] == "solo" || (node[:instance_role].match(/^app/) || node[:instance_role] == "utility")
+if node[:instance_role] == "solo" || (node[:instance_role].match(/^app/) || node[:instance_role] == "util")
   require_recipe 'solr_client'
 end
 

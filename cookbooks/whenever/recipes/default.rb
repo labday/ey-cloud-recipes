@@ -4,7 +4,7 @@
 #
 
 node[:applications].each do |app,data|
-  if node[:instance_role] == "utility"
+  if node[:instance_role] == "util"
     directory "/var/log/engineyard/rails" do
       owner node[:owner_name]
       group node[:owner_name]
