@@ -5,12 +5,7 @@ execute "testing" do
 end
 
 if node[:instance_role] == "solo" || node[:instance_role] == "util"
-  require_recipe "whenever"
-
-  execute "Seeding database" do
-    cwd "/data/LabDay/current"
-    command 'rake db:seed --trace'
-  end  
+  require_recipe "whenever" 
 end
 
 if node[:instance_role] == "solo" || node[:instance_role].match(/^app/)
