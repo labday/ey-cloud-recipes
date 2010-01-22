@@ -16,9 +16,9 @@ if node[:instance_role] == "solo" || (node[:name] && node[:name].upcase == 'SOLR
   require_recipe 'solr'
 end
 
-if node[:instance_role] == "solo" || (node[:instance_role].match(/^app/) || node[:instance_role] == "util")
-  require_recipe 'solr_client'
-end
+# if node[:instance_role] == "solo" || (node[:instance_role].match(/^app/) || node[:instance_role] == "util")
+#   require_recipe 'solr_client'
+# end
 
 # uncomment if you want to run couchdb recipe
 # require_recipe "couchdb"
